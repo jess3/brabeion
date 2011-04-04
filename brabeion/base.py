@@ -1,6 +1,6 @@
 from brabeion.models import BadgeAward
 from brabeion.signals import badge_awarded
-
+from brabeion.utils import get_django_user
 
 
 class BadgeAwarded(object):
@@ -79,5 +79,5 @@ def send_badge_messages(badge_award, **kwargs):
     else:
         message = user_message
     if message is not None:
-        badge_award.user.message_set.create(message=message)
+        get_django_user(badge_award.user).message_set.create(message=message)
 badge_awarded.connect(send_badge_messages)

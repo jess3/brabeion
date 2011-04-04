@@ -1,13 +1,11 @@
 from datetime import datetime
 
+from django.conf import settings
 from django.db import models
-
 from django.contrib.auth.models import User
 
-
-
 class BadgeAward(models.Model):
-    user = models.ForeignKey(User, related_name="badges_earned")
+    user = models.ForeignKey(getattr(settings, 'BRABEION_USER_MODEL', User), related_name="badges_earned")
     awarded_at = models.DateTimeField(default=datetime.now)
     slug = models.CharField(max_length=255)
     level = models.IntegerField()

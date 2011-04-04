@@ -1,4 +1,5 @@
 from collections import defaultdict
+from brabeion.utils import get_brabeion_user
 
 from django.db.models import Count
 from django.shortcuts import render_to_response
@@ -13,7 +14,7 @@ def badge_list(request):
     if request.user.is_authenticated():
         user_badges = set((slug, level) for slug, level in
             BadgeAward.objects.filter(
-                user = request.user
+                user = get_brabeion_user(request.user)
             ).values_list("slug", "level"))
     else:
         user_badges = []
